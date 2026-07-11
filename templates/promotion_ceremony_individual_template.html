@@ -1,0 +1,293 @@
+<!-- 
+	Name: Change of Command E-Invite Template
+	Author: Graham Johnson
+	Date: 10 Jul 26
+-->
+
+<!--
+The purpose of this template is to provide a standalone, client-side HTML and JavaScript form that
+creates Electronic Invitatations in the style of the depreciated "AFIT E-Invites" website.
+
+This form is based on an example invitation created by the now depreciated "AFIT E-Invites" website.
+The author manually updated the original template to permit use of JavaScript to update the template. 
+
+JavaScript for this form was created and tested with the support of Gemini Enterprise (Gemini 3.5 Flash). 
+
+Sample CSS from here: https://formbold.com/templates
+
+HTML Accessibility Standards: https://www.w3.org/WAI/standards-guidelines/ 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Invitation</title>	
+	<link rel="stylesheet" href="../css/e_invite.css">
+
+	<!-- HTML to Canvas Library: Used to print the invitation to an image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Local helper functions - functions used across multiple template files -->
+    <script type="text/javascript" src='../scripts/helper_functions.js'></script>
+
+    <!-- Load Disclaimers - Used to load the footer with disclaimers, so that updating one file updates all templates -->
+    <script type="text/javascript" src='../scripts/footer.js'></script>
+</head>
+
+<body>
+	<div style="display:none;">
+      	<h1>Test Invitation</h1>
+    </div>
+
+	<div align="center">
+    	<div class="paper">
+    		<div class="outborder" style="width:750px;">
+        	<div class="topper" style="padding-top: 10px;">
+				<img id="unit_logo" src="https://upload.wikimedia.org/wikipedia/commons/6/67/1st_Marine_Amphibious_Corp.jpg" class="center" alt="37th Infantry Division logo">
+			</div>
+              
+          	<div class="content"> 
+				<span class="style1">
+		            <h1 style="text-align: center; margin: 0; font-size: 12pt" class="style1" id="presiding_title_unit">The Commanding General, 1st Marine Amphibious Corps,</h3>
+					<h2 style="text-align: center; margin: 0; font-size: 12pt" class="style2" id="presiding_official">Major General Alexander Vandegrift</h4>
+					<p style="text-align: center; margin: 12px 0px; font-size: 12pt" class="style3nobold">requests the pleasure of your company at a</p>
+					<h4 style="text-align: center; font-size: 12pt" class="style3">Promotion Ceremony</h4>
+					<p style="text-align: center; margin: 0; font-size: 12pt" class="style3nobold">at which </p>
+					<h4 style="text-align: center; margin: 0; font-size: 12pt" id="promotee_name" class="style3">Brigadier General Robert S. Beightler</h4>
+					<p style="text-align: center; margin: 0; font-size: 12pt" class="style3nobold">will promote to the grade of</p>
+					<p style="text-align: center; margin: 0; font-size: 12pt" id="new_rank" class="style3">Major General</p>
+					<p></p>
+					<p style="text-align: center; margin: 0; font-size: 12pt" id="event_date" class="style3nobold">on Wednesday, the 23rd of July</p>
+					<p style="text-align: center; margin: 0; font-size: 12pt" id="event_time" class="style3nobold">at 7 o’clock in the morning</p>
+					<p></p>
+					<p style="text-align: center; margin: 0; font-size: 12pt" id="event_location" class="style3nobold">Huffman Prarie</p>
+					<p style="text-align: center; margin: 0; font-size: 12pt" id="event_city_state_country" class="style3nobold">Wright-Patterson Army Airfield, Ohio</p> 
+        		</span>
+			</div>
+          
+        	<div class="split">
+              	<div class="split_left">
+					<div class="split_left_box">
+            				<div style="padding:0 0 0 30px;">
+                      				<p style="text-align: left; margin: 0; font-size: 12pt" id="rsvp_by" class="style3nobold">R.S.V.P. by 1942-07-18</p>
+
+									<p style="text-align: left; margin: 0; font-size: 12pt" id="poc_1" class="style3nobold">
+                          			POC: <a id="poc_1_email" href="mailto:example@us.af.mil">CPT Graham Johnson</a></p>
+
+                    				<p style="text-align: left; margin: 0; font-size: 12pt" id="poc_1_phone" class="style3nobold">COMM: 937-377-0000</p>
+
+									<p style="text-align: left; margin: 0; font-size: 12pt" id="poc_2" class="style3nobold">
+									Alt POC: <a id="poc_2_email" href="mailto:example@us.af.mil">2LT George Lucas</a></p>
+                    				<p style="text-align: left; margin: 0; font-size: 12pt" id="poc_2_phone" class="style3nobold">COMM: 937-377-0000</p>
+                   			</div>
+					</div>
+          		</div>
+              		
+			<div class="split_right">
+            			<div class="split_right_box">
+                  			<div style="padding:0 30px 0 0;">
+								<p style="text-align: left; margin: 0; font-size: 12pt" id="military_dress" class="style3nobold">Military: UOD</p>
+	                       		<p style="text-align: left; margin: 0; font-size: 12pt" id="civilian_dress" class="style3nobold">Civilian: Business Casual</p>
+                        	</div>
+                		</div>
+          		</div>
+		<div style="clear:both;"></div>
+	</div>
+      
+        <div class="rline">
+            <p style="text-align: center; margin: 1; font-size: 12pt" id="additional_information" class="style3">Food and refreshment to follow in the adjoining hanger.</p>
+        </div>
+      
+        <div style="clear:both;"></div>
+       	<div align="center">
+        <div class="buttonline">
+
+        <div align="center">
+            <a href="" class="rsvpbuttonlink" target="_self" id="rsvp_link_div">
+                <div class="exampleborderradius">
+                    <div class="rsvpbuttonpad" id="rsvp_button">R.S.V.P. to Promotion Ceremony</div>
+                    </div>
+                </a>
+            </div>
+
+                </div>
+          </div>
+              
+          <div style="clear:both;"></div>
+
+          <div class="bottomspacer"></div>
+        </div>
+     
+  </div>
+
+<!------------------ END INVITATION ------------------------------------------->
+
+<!-- START: Print, Copy and Image, and Generate Email Buttons -->
+
+    <div style="text-align: center; margin: 20px;">
+        <button id="print-btn" class="formbold-btn">Print to PDF</button>
+		<button id="email-btn" class="formbold-btn">Email Invitation</button>
+		<button id="copy-image-btn" class="formbold-btn">Copy as Image for Email</button>
+    </div>
+
+<!-- END: Print and Email Buttons Buttons -->
+
+
+<!------------------ START FOOTER --------------------------------------------->
+
+<div style="width:800px; background:white;"><p>&nbsp;</p>
+
+    <div style="width:700px;clear:both;">
+
+    <div class="container-fluid">
+        <div class="row" style="text-align: left;">
+            <div id='footer'></div>
+
+<div style="clear:both;height:50px;width:90%;"></div></div></div>
+
+<!------------------ END FOOTER --------------------------------------------->
+
+</div>
+</div>
+</div>
+</body>
+</html>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+  		// 1. Retrieve the JSON string from memory
+  		const rawData = sessionStorage.getItem('eventPayload');
+
+  		if (rawData) {
+    		// 2. Parse it back into a JavaScript Object
+   	 		const eventData = JSON.parse(rawData);
+
+    		// 3. Map data to the DOM elements
+			
+			// --- Text & Color Styling ---
+			const styleElements = document.querySelectorAll('.style1, .style2, .style3, .style3nobold, .split_left, .split_right, .rline');
+			if (eventData.border_color) {
+				document.querySelector('.outborder').style.borderColor = eventData.border_color;
+				styleElements.forEach(el => el.style.color = eventData.border_color);
+			}
+			if (eventData.font_size) {
+				styleElements.forEach(el => el.style.fontSize = eventData.font_size + 'pt');
+			}
+			if (eventData.font_type) {
+				styleElements.forEach(el => el.style.fontFamily = eventData.font_type);
+			}
+			if (eventData.button_color) {
+				document.querySelector('.exampleborderradius').style.backgroundColor = eventData.button_color;
+			}
+			// Set button text color
+			document.getElementById('rsvp_button').style.color = getContrastColor(eventData.border_color);
+			// --- Invitation Content ---
+			let presidingOfficialUnit = eventData.unit || '';
+			let presidingOfficialTitle = 'Commander';
+
+			// Set the presiding official's unit, if not the event's unit
+			if (eventData.presiding_official_unit) {
+				presidingOfficialUnit = `${eventData.presiding_official_unit || ''}`
+			}
+
+			// Title is not "Commander"
+			if (eventData.presiding_official_title) {
+				presidingOfficialTitle = `${eventData.presiding_official_title || ''}`
+			}
+
+			document.getElementById('presiding_title_unit').textContent = `The ${presidingOfficialTitle}, ${presidingOfficialUnit},`;
+			document.getElementById('presiding_official').textContent = eventData.presiding_official || '';
+			document.getElementById('promotee_name').textContent = eventData.promotee_name || '';
+			document.getElementById('new_rank').textContent = eventData.new_rank || '';
+
+			// --- Location ---
+			document.getElementById('event_location').textContent = eventData.location || '';
+			document.getElementById('event_city_state_country').textContent = `${eventData.city || ''}, ${eventData.state || ''}`;
+			
+			// --- Date & Time ---
+			if (eventData.event_date) {
+				document.getElementById('event_date').textContent = formatEventDate(eventData.event_date);
+			}
+			if (eventData.event_hours && eventData.event_minutes) {
+				document.getElementById('event_time').textContent = formatEventTime(eventData.event_hours, eventData.event_minutes);
+			}
+
+			
+			// --- RSVP Details ---
+			if (eventData.rsvp_date) {
+				const rsvpPretty = formatSimpleDate(eventData.rsvp_date);
+				document.getElementById('rsvp_by').textContent = `R.S.V.P. by ${rsvpPretty}`;
+			}
+			else {
+				document.getElementById('rsvp_by').textContent = ``;
+			}
+
+			// --- POC Details ---
+			document.getElementById('poc_1_email').textContent = eventData.poc_name_1 || '';
+			document.getElementById('poc_1_email').href = `mailto:${eventData.poc_email_1 || ''}`;
+			document.getElementById('poc_1_phone').textContent = `COMM: ${eventData.poc_phone_1 || ''}`;
+
+			if (eventData.poc_name_2) {
+				document.getElementById('poc_2_email').textContent = eventData.poc_name_2;
+				document.getElementById('poc_2_email').href = `mailto:${eventData.poc_email_2 || ''}`;
+				document.getElementById('poc_2_phone').textContent = `COMM: ${eventData.poc_phone_2 || ''}`;
+			} else {
+				// Hide secondary POC fields if they are empty
+				document.getElementById('poc_2').style.display = 'none';
+				document.getElementById('poc_2_phone').style.display = 'none';
+			}
+
+			// --- Attire ---
+			document.getElementById('military_dress').textContent = `Military: ${eventData.military_dress_code || ''}`;
+			document.getElementById('civilian_dress').textContent = `Civilian: ${eventData.civilian_dress_code || ''}`;
+
+			// --- RSVP Link ---
+			// Update link and button name
+			if (eventData.rsvp_link) {
+				document.getElementById('rsvp_link_div').href = eventData.rsvp_link;
+				document.getElementById('rsvp_button').textContent = `RSVP for ${eventData.event_name || 'the event'}`;
+			}
+			// Hide button if no link
+			else {
+				document.getElementById('rsvp_link_div').style.display = 'none';
+				document.getElementById('rsvp_button').style.display = 'none';
+				document.getElementById('rsvp_by').style.display = 'none';
+			}
+
+			// --- Update the Unit Logo ---
+    		if (eventData.unit_logo_src) {
+        		const logoImage = document.getElementById('unit_logo');
+        		logoImage.src = eventData.unit_logo_src;
+        
+        		// Also update the alt text for better accessibility
+        		if (eventData.unit) {
+            			logoImage.alt = `Logo for ${eventData.unit}`;
+        		}
+    		}
+
+    		// --- Additional Information ---
+    		if(eventData.additional_information){
+    			document.getElementById('additional_information').textContent = eventData.additional_information;
+    		}
+    		else {
+    			document.getElementById('additional_information').style.display = 'none';
+    		}
+			
+    	// Finally, clear the storage - the user can submit a new the form again if there are any mistakes
+    	// sessionStorage.removeItem('eventPayload'); // Optional: uncomment to clear after loading
+  		}
+
+		else {
+    			console.warn("No event data found in session storage. Displaying default template content.");
+  		}
+	});
+
+	/*--- Add functionality for print to PDF, email, and Copy as Image buttons ---*/
+	document.addEventListener('DOMContentLoaded', initializePrintToPDFButton('print-btn'));
+	document.addEventListener('DOMContentLoaded', initializeEmailButton('email-btn'));
+	document.addEventListener('DOMContentLoaded', initializeCopyImageButton('copy-image-btn', '.outborder'));
+
+	/*--- Add the footer ---*/
+    createFooter('footer');
+</script>
