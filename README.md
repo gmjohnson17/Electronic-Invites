@@ -9,8 +9,10 @@ Provide a standalone HTML and JavaScript solution to replace the, now depreciate
 2. Unzip the project folder.
 3. Open the Invitation Creator HTML file (invitation_creator_1_X.html).
 4. Use the Invitation Creator HTML file to create your invitation.
+5. If you made a mistake when creating an invite (after hitting submit), exit out of the page and make the correction.
 ## Author/Contributors
 Graham Johnson (gmjohnson17)
+
 If you would like to contribute, please contribute via a GitHub pull request. If your contributions are accepted, I will list your name and/or GitHub username here.
 ## Version History
 Version 1.0 (10 July 2026): Initial version. Implements Invitation Creator HTML file and template HTML files.
