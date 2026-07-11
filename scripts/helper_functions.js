@@ -10,19 +10,49 @@
 */
 
 /** 
- * Formats a date string into a "Month Day, Year" format.
+ * Formats a date string into a "Day Month Year" format, with long month.
  * @param {string} dateString - The raw value from <input type="date"> (YYYY-MM-DD)
- * @returns {string} Formatted string (e.g., "18 Jul 26")
+ * @returns {string} Formatted string (e.g., "18 July 26")
  */
-function formatSimpleDateMilitary(dateString) {
+function formatSimpleDateMilitaryLong(dateString) {
    	if (!dateString) return "";
 
-		const parts = dateString.split('-');
-		const year = parseInt(parts[0], 10).slice(-2);
-		const month = parseInt(parts[1], 10) - 1; // JS months are 0-indexed
-		const day = parseInt(parts[2], 10);
+	const parts = dateString.split('-');
+	const year = parseInt(parts[0], 10);
+	const month = parseInt(parts[1], 10) - 1; // JS months are 0-indexed
+	const day = parseInt(parts[2], 10);
 
-		return `${day} ${month} ${year}`
+	const date = new Date(year, month, day);
+
+	// Use toLocaleDateString for a clean, localized format
+	return date.toLocaleDateString('en-GB', {
+		day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+	});
+}
+
+/** 
+ * Formats a date string into a "Day Month Year" format, with short month.
+ * @param {string} dateString - The raw value from <input type="date"> (YYYY-MM-DD)
+ * @returns {string} Formatted string (e.g., "18 JUL 26")
+ */
+function formatSimpleDateMilitary(dateString) {
+    if (!dateString) return "";
+
+    const parts = dateString.split('-');
+    if (parts.length !== 3) return "";
+
+    // Pull the last 2 characters of the year string directly
+    const yearShort = parts[0].slice(-2); 
+    const day = parts[2].padStart(2, '0');
+
+    // Months in military format are typically 3-letter abbreviations
+    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const monthIdx = parseInt(parts[1], 10) - 1;
+    const monthStr = months[monthIdx] || "";
+
+    return `${day} ${monthStr} ${yearShort}`; // e.g., "15 MAR 26"
 }
 
 /**
@@ -31,21 +61,21 @@ function formatSimpleDateMilitary(dateString) {
  * @returns {string} Formatted string (e.g., "July 18, 2026")
  */
 function formatSimpleDate(dateString) {
-		if (!dateString) return "";
+	if (!dateString) return "";
 
-		const parts = dateString.split('-');
-		const year = parseInt(parts[0], 10);
-		const month = parseInt(parts[1], 10) - 1; // JS months are 0-indexed
-		const day = parseInt(parts[2], 10);
+	const parts = dateString.split('-');
+	const year = parseInt(parts[0], 10);
+	const month = parseInt(parts[1], 10) - 1; // JS months are 0-indexed
+	const day = parseInt(parts[2], 10);
 
-		const date = new Date(year, month, day);
+	const date = new Date(year, month, day);
 
-		// Use toLocaleDateString for a clean, localized format
-		return date.toLocaleDateString('en-US', {
-    		year: 'numeric',
-    		month: 'long',
-    		day: 'numeric'
-		});
+	// Use toLocaleDateString for a clean, localized format
+	return date.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	});
 }
 
 /**
@@ -278,4 +308,46 @@ function getContrastColor(rgbString) {
     const rgb = rgbString.match(/\d+/g).map(Number);
     const luminance = getLuminance(rgb[0], rgb[1], rgb[2]);
     return luminance > 0.179 ? "black" : "white";
+}
+
+/**
+ * Gets the contrast color for the given color
+ * @param {string} textareaId - identifier for the text area
+ * @returns {string} color - black or white, based on the input color
+*/
+function insertNamesToDiv(namesText, targetDivId, numColumns = 1) {
+    // 1. Get the elements from the DOM
+    const targetDiv = document.getElementById(targetDivId);
+
+    if (!targetDiv) {
+        console.error("Could not find target div.");
+        return;
+    }
+
+	targetDiv.innerHTML = ""; 
+    targetDiv.style.display = "grid";
+    targetDiv.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`;
+
+    // 2. Split the text into an array by newlines
+    const names = namesText.split('\n');
+
+    // 3. Process each name
+    names.forEach(name => {
+        // Clean up leading/trailing whitespace
+        const cleanedName = name.trim();
+
+        // Skip completely empty lines
+        if (cleanedName === "") return;
+
+        // 4. Create the new paragraph element
+        const p = document.createElement('p');
+
+        p.style = "text-align: center; margin: 0";
+        
+        // Use textContent instead of innerHTML for security
+        p.textContent = cleanedName;
+
+        // 5. Append the new paragraph to the target div
+        targetDiv.appendChild(p);
+    });
 }
