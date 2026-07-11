@@ -9,7 +9,7 @@ Provide a standalone HTML and JavaScript solution to replace the, now depreciate
 2. Unzip the project folder.
 3. Open the Invitation Creator HTML file (invitation_creator_1_X.html).
 4. Use the Invitation Creator HTML file to create your invitation.
-5. If you made a mistake when creating an invite (after hitting submit), exit out of the page and make the correction.
+5. If you made a mistake when creating an invite (after hitting submit), exit out of the new tab and make the correction.
 ## Author/Contributors
 Graham Johnson (gmjohnson17)
 
