@@ -3,19 +3,30 @@
 Provide a standalone HTML and JavaScript solution to replace the, now depreciated, Air Force Institute of Technology (AFIT) Electronic Invites. 
 ## Prerequisites
 1. A modern web-browser (Chrome, Firefox, Edge, etc.).
-2. An Internet connection (required to print the invite to an image file).
+2. An Internet connection (required to print the invite to an image file and upload from Excel).
+3. Excel, Google Sheets, or another way to edit .xlxs files.
+
 ## Setup
 1. Download the most current project folder (.zip file).
 2. Unzip the project folder.
 3. Open the Invitation Creator HTML file (invitation_creator_1_X.html).
 4. Use the Invitation Creator HTML file to create your invitation.
 5. If you made a mistake when creating an invite (after hitting submit), exit out of the new tab and make the correction.
+
+## Recommendations for Collecting RSVPs
+1. Non-Paying Events: For users with Microsoft 365 access (such as DOD365 and equivalent users), I recommend using Microsoft Forms for collecting RSVPs. A 3-minute tutorial on how to do this is here: https://www.youtube.com/watch?v=65Oz1CfOQso 
+2. Paid Events: For paid events, please reach out to your local Protocol or equivalent office for guidance. Plenty of sites exist, such as EventBrite and Zeffy, based on your organization's needs.
+
 ## Author/Contributors
 Graham Johnson (gmjohnson17)
 
 If you would like to contribute, please contribute via a GitHub pull request. If your contributions are accepted, I will list your name and/or GitHub username here.
+
 ## Version History
+Version 1.1 (13 July 2026): Adds the ability to upload an Excel spreadsheet (.xlxs file) to the Invitation Creator HTML, for easy input for recurring events/invites.
+
 Version 1.0 (10 July 2026): Initial version. Implements Invitation Creator HTML file and template HTML files.
+
 ## Disclaimers
 ### Non-Endorsement Disclaimer
 This tool is not affiliated with, authorized, maintained, sponsored, or endorsed by the Department of Defense (War), the U.S. Government, or any of its sub-agencies. 
