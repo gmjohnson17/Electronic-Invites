@@ -1,0 +1,941 @@
+<!-- 	
+	Name: Invitation Creator Form
+	Author: Graham Johnson
+	Date: 13 Jul 26
+-->
+
+<!--
+The purpose of this form is to provide a standalone, client-side HTML and JavaScript form that
+creates Electronic Invitatations in the style of the depreciated "AFIT E-Invites" website. 
+
+This form is based on the instructions provided at this link: 
+https://dev.to/wyattdave/how-to-create-your-own-form-with-power-automate-4546
+
+JavaScript for this form was created and tested with the support of Gemini Enterprise (Gemini 3.5 Flash).
+
+Sample CSS from here: https://formbold.com/templates 
+
+HTML Accessibility Standards: https://www.w3.org/WAI/standards-guidelines/ 
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Unofficial Electronic Invitation Creation Form - Dept of War</title>	
+  <link rel="stylesheet" href="css/formbold.css">
+
+  <!-- SheetJS Library: Used to load information from Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Load Disclaimers - Used to load the footer with disclaimers, so that updating one file updates all templates -->
+  <script type="text/javascript" src='./scripts/footer.js'></script>
+</head>
+
+<body>
+
+<div class="formbold-main-wrapper">
+	
+	<div class="formbold-form-wrapper">
+
+		<h1 class="formbold-form-label" style="font-size: 24pt; font-weight: bold; text-align: center">Unofficial Electronic Invitation Creation Form</h1>
+		<h2 class="formbold-form-label" style="font-size: 16pt" align="center"><font style="font-weight: bold;">Purpose:</font> Support Creation of Electronic Invitations for Common Department of War Events and Ceremonies.</h2>
+		<p style="color: red; text-align: center; margin: 2">* denotes mandatory item </p><br>
+		
+		<div class="upload-container" style="text-align: center; margin: 0px 0px 30px 0px">
+			<!-- Upload CSV implementation -->
+			<!--<label for="csv_upload" class="formbold-form-label"><b>Import Data from CSV Template:</b></label>
+    			<input type="file" id="csv_upload" accept=".csv" class="formbold-form-input" style="padding: 5px;">
+    			<p style="font-size: 10pt; color: #666; margin-top: 5px;">*Save your Excel file as a CSV and upload it here to auto-fill the form.</p> -->
+			<!-- SheetsJS implementation -->
+  			<label for="excel-upload">Import Data from Excel:</label>
+  			<input type="file" id="excel-upload" accept=".xlsx, .xls" />
+		</div>
+
+		<p></p><p></p>
+
+		<form id='invite_form'>
+			<div class="formbold-input-flex">
+				<div>
+					<input type="text" id="event_name" name="event_name" value=""
+					class="formbold-form-input" placeholder="Your Event Name Here*" required>
+					<label for="event_name" class="formbold-form-label" required>Event Name*:</label>
+				</div>
+				<div>
+        				<input type="text" id="unit" name="unit"
+					class="formbold-form-input" placeholder="123d Fighter Squadron" required>
+					<label for="unit" class="formbold-form-label">Event Unit*:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+					<input type="text" id="event_date" name="event_date" value=""
+					class="formbold-form-input" placeholder="Select the event's date"
+					onfocus="(this.type='date')"
+					onblur="if(!this.value) this.type='text'" required>
+					<label for="event_date" class="formbold-form-label">Event Date*:</label>
+				</div>
+	
+				<div>
+					<input type="date" id="rsvp_date" name="rsvp_date" value=""
+					class="formbold-form-input" placeholder="Select the RSVP deadline here"
+					onfocus="(this.type='date')"
+					onblur="if(!this.value) this.type='text'">
+					<label for="rsvp_date" class="formbold-form-label">RSVP Date:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+					<select name="event_hours" id="event_hours" required>
+					</select>
+
+					<label for="event_hours" class="formbold-form-label">
+					Start Hours (0-23)*:</label>
+				</div>
+				<div>
+					<select name="event_minutes" id="event_minutes" required></select>
+
+					<label for="event_minutes" class="formbold-form-label">Start Minutes (0-59)*:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+        				<input type="text" id="location" name="location"
+					class="formbold-form-input" placeholder="42 Wallaby Way" required>
+					<label for="location" class="formbold-form-label">Event Location*:</label>
+				</div>
+
+				<div>
+        				<input type="text" id="city" name="city"
+					class="formbold-form-input" placeholder="Sydney" required>
+					<label for="city" class="formbold-form-label">Event City*:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+        				<input type="text" id="state" name="state"
+					class="formbold-form-input" placeholder="New South Wales" required>
+					<label for="state" class="formbold-form-label">Event State*:</label>
+				</div>
+
+				<div>
+        				<input type="text" id="country" name="country"
+					class="formbold-form-input" placeholder="Australia">
+					<label for="country" class="formbold-form-label">Event Country:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+        				<input type="color" id="border_color" name="border_color"
+					class="formbold-form-input" value="#002596" required>
+					<label for="border_color" class="formbold-form-label">Border & Text Color*:</label>
+				</div>
+
+				<div>
+        				<input type="color" id="button_color" name="button_color"
+					class="formbold-form-input" value="#002596" required>
+					<label for="button_color" class="formbold-form-label">Button Color*:</label>
+				</div>
+
+	
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+					<select id="font_size" name="font_size" required></select>
+					<label for="font_size" class="formbold-form-label">Font Size (10-38)*:</label>
+				</div>
+
+				<div>
+					<select id="font_type" name="font_type" required>
+						<option value="Arial, sans-serif">Arial</option>
+    						<option value="'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica</option>
+    						<option value="'Lucida Sans', sans-serif">Lucida Sans</option>
+    						<option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
+    						<option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+    						<option value="Verdana, sans-serif">Verdana</option>
+						<option value="Georgia, serif">Georgia</option>
+    						<option value="'Palatino Linotype', Palatino, serif">Palatino</option>
+    						<option value="'Times New Roman', Times, serif">Times New Roman</option>
+						<option value="'Courier New', Courier, monospace">Courier New</option>
+    						<option value="'Lucida Console', Monaco, monospace">Lucida Console</option>
+						<option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+					</select>
+					<label for="font_type" class="formbold-form-label">Font Type*:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+        				<input type="text" id="military_dress_code" name="military_dress_code"
+					class="formbold-form-input" placeholder="Uniform of the Day (UOD)" required>
+					<label for="military_dress_code" class="formbold-form-label">Military Attire*:</label>
+				</div>
+
+				<div>
+        				<input type="text" id="civilian_dress_code" name="civilian_dress_code"
+					class="formbold-form-input" placeholder="Business Casual" required>
+					<label for="civilian_dress_code" class="formbold-form-label">Civilian Attire*:</label>
+				</div>
+			</div>
+
+        		<div class="formbold-input-flex">
+				<div>
+        				<input type="text" id="poc_name_1" name="poc_name_1"
+					class="formbold-form-input" placeholder="CPT Wayne" required>
+					<label for="poc_name_1" class="formbold-form-label">Event POC 1 Name*:</label>
+				</div>
+
+				<div>
+        				<input type="text" id="poc_name_2" name="poc_name_2"
+					class="formbold-form-input" placeholder="2d Lt Kent">
+					<label for="poc_name_2" class="formbold-form-label">Event POC 2 Name:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+        				<input type="email" id="poc_email_1" name="poc_email_1"
+					class="formbold-form-input" placeholder="bruce.m.wayne.mil@mail.mil" required>
+					<label for="poc_email_1" class="formbold-form-label">Event POC 1 Email*:</label>
+				</div>
+
+				<div>
+        				<input type="email" id="poc_email_2" name="poc_email_2"
+					class="formbold-form-input" placeholder="clark.kent.17@us.af.mil">
+					<label for="poc_email_2" class="formbold-form-label">Event POC 2 Email:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+        				<input type="tel" id="poc_phone_1" name="poc_phone_1"
+					class="formbold-form-input" placeholder="719-338-1234" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+					<label for="poc_phone_1" class="formbold-form-label">Event POC 1 Phone*:</label>
+				</div>
+
+				<div>
+        				<input type="tel" id="poc_phone_2" name="poc_phone_2"
+					class="formbold-form-input" placeholder="719-338-1234" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+					<label for="poc_phone_2" class="formbold-form-label">Event POC 2 Phone:</label>
+				</div>
+			</div>
+
+			<div class="formbold-input-flex">
+	    			<div>
+	    				<input type="text" id="presiding_official" name="presiding_official" class="formbold-form-input" placeholder="Admiral Jonathan Archer" required>
+              				<label for="presiding_official" class="formbold-form-label">Presiding Official/Event Host*:</label>
+            			</div>
+	    		<div>
+	    			<input type="text" id="presiding_official_unit" name="presiding_official_unit" class="formbold-form-input" placeholder="Provide if different from event unit">
+              			<label for="presiding_official_unit" class="formbold-form-label">Presiding Official Unit/Host Organization:</label>
+            			</div>
+          		</div>
+
+			<div class="formbold-input-flex">
+				<div>
+					<input type="text" id="presiding_official_title" name="presiding_official_title"
+					class="formbold-form-input" placeholder="Provide if not 'Commander'">
+					<label for="presiding_official_title" class="formbold-form-label">Presiding Official/Host Title:</label>
+				</div>
+				
+				<div>
+					<input type="text" id="rsvp_link" name="rsvp_link"
+					class="formbold-form-input">
+					<label for="rsvp_link" class="formbold-form-label">RSVP Link:</label>
+				</div>
+			</div>
+
+			<div>
+				<label for="additional_information" class="formbold-form-label">Additional Information*:</label>
+			  <textarea id="additional_information" name="additional_information" class="formbold-textarea" placeholder="Reception to follow..." rows="3" cols="110" required></textarea>
+      </div>
+
+			<div class="formbold-input-flex">
+				<div>
+					<select name="event_type" id="event_type" required>
+						<option value="change_of_command">Change of Command</option>
+						<option value="assumption_of_command">Assumption of Command</option>
+						<option value="promotion_ceremony_individual">Promotion Ceremony (Individual)</option>
+						<option value="promotion_ceremony_group">Promotion Ceremony (Group)</option>
+						<option value="retirement_ceremony">Retirement Ceremony</option>
+						<option value="commissioning_ceremony">Commissioning Ceremony</option>
+						<option value="graduation">Graduation</option>
+						<!--<option value="awards_ceremony">Awards Ceremony</option>-->
+						<option value="generic_no_food">Other Event (no food)</option>
+						<option value="generic_food">Other Event (food provided)</option>
+					</select>
+					<label for="event_type" class="formbold-form-label">Event Type*:</label>
+				</div>
+
+				<div>
+					<input type="file" id="file_upload" name="file_upload"
+					class="formbold-form-input" accept="image/*" required>
+					<label for="file_upload" class="formbold-form-label">Unit Patch/Logo*:</label>
+				</div>
+
+			</div>
+
+			<div class="formbold-input-flex">
+				<div>
+					<p id="preview_bold" 
+					style="font-family: Arial; font-size: 10pt; font-weight: bold; 
+					color: #002596;">Sample Text Bold</p>
+					<br>
+					<p id="preview_italics" 
+					style="font-family: Arial; font-size: 10pt; font-weight: bold; 
+					color: #002596;"><i>Sample Text Italics</i></p>
+					<label for="preview_italics" class="formbold-form-label">Font Preview:</label>
+				</div>
+
+				<div>
+					<img id="image_preview" alt="Preview for uploaded image.">
+					<label for="image_preview" class="formbold-form-label">Image Preview:</label>
+				</div>
+				
+			</div>
+      	  		
+			<!-- Conditional Fields Placeholder HTML-->
+
+			<div id="conditional_fields_container"></div>
+			
+			<input type="submit" value="Submit" class="formbold-btn">
+			
+		</form>
+	</div>
+</div>
+
+<div class="formbold-main-wrapper">
+	<div class="formbold-form-wrapper">
+ 		<div id='footer'></div>
+	</div>
+</div>
+
+</body>
+
+<!-- Scripts -->
+
+<script>
+  
+  /* -- START: Prepopulate Fields - Hours, Minutes, and Font Size -- */
+
+  // Hours and minutes HTML references
+  const minutes_select = document.getElementById('event_minutes');
+  const hours_select = document.getElementById('event_hours');
+  const font_size_select = document.getElementById('font_size');
+  
+  // Populate hours
+  for (let i = 0; i <= 59; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    // Formats single digits to 2 digits (e.g., "0" becomes "00")
+    opt.textContent = i.toString().padStart(2, '0'); 
+    minutes_select.appendChild(opt);
+  }
+
+  // Populate minutes
+  for (let i = 0; i <= 23; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    // Formats single digits to 2 digits (e.g., "0" becomes "00")
+    opt.textContent = i.toString().padStart(2, '0'); 
+    hours_select.appendChild(opt);
+  }
+
+  // Populate font size
+  for (let i = 10; i <= 32; i++) {
+    const opt = document.createElement('option');
+    opt.value = i; 
+    opt.textContent = i.toString(); 
+    font_size_select.appendChild(opt);
+  }
+
+  /* -- END: Prepopulate Fields - Hours, Minutes, and Font Size -- */
+
+  /* -- START: Preview Listeners - Font (size and color) and Image Preview -- */
+
+  // Change font preview
+  const text_color = document.getElementById('border_color');
+  const font_type = document.getElementById('font_type');
+  const preview_bold = document.getElementById('preview_bold');
+  const preview_italics = document.getElementById('preview_italics');
+  
+  // add a listener
+  
+  text_color.addEventListener('input', function(){
+		preview_bold.style.color = text_color.value;
+		preview_italics.style.color = text_color.value;
+  });
+
+  font_type.addEventListener('input', function(){
+		preview_bold.style.fontFamily = font_type.value;
+		preview_italics.style.fontFamily = font_type.value;
+  });
+
+  font_size_select.addEventListener('input', function(){
+		preview_bold.style.fontSize = font_size_select.value + "pt";
+		preview_italics.style.fontSize = font_size_select.value + "pt";
+  });
+
+   // Load image preview
+   const image_input = document.getElementById('file_upload');
+   const image_preview = document.getElementById('image_preview');
+
+   image_input.addEventListener('change', function(event) {
+      const file = event.target.files[0]; // Get the selected file
+
+      if (file) {
+      // Generate a temporary local object URL
+         const objectURL = URL.createObjectURL(file); 
+                
+         // Assign the URL to the image src and make it visible
+         image_preview.src = objectURL;
+         image_preview.style.display = 'block';
+      }
+   });
+
+  /* -- END: Preview Listeners - Font (size and color) and Image Preview -- */
+  
+  /* -- START: Dynamic Fields Listeners - Event Type-specific Fields -- */
+  
+  const eventTypeSelect = document.getElementById('event_type');
+  const conditionalContainer = document.getElementById('conditional_fields_container');
+
+  // add a listener for a change to the Event Type field
+  eventTypeSelect.addEventListener('change', function() {
+    updateConditionalFields(this.value);
+  });
+
+  /**
+   * Clears the conditional container and adds new fields based on the selected event type.
+   * @param {string} eventType - The value of the selected option (e.g., 'change_of_command').
+   */
+  function updateConditionalFields(eventType) {
+    // First, clear any existing fields from the container
+    conditionalContainer.innerHTML = '';
+
+    let htmlToInsert = '';
+
+    // Use a switch statement to determine which fields to create
+    switch (eventType) {
+
+      case 'assumption_of_command':
+      case 'change_of_command':
+				htmlToInsert = `
+          <div class="formbold-input-flex">
+            <div>
+	      <input type="text" id="inbound_cc" name="inbound_cc" class="formbold-form-input" placeholder="Captain James T. Kirk" required>
+              <label for="inbound_cc" class="formbold-form-label">Inbound Commander*:</label>
+            </div>
+        `;
+
+				if(eventType == 'change_of_command'){
+	  			htmlToInsert += `	
+						<div>
+			              <input type="text" id="outgoing_cc" name="outgoing_cc" class="formbold-form-input" placeholder="Captain Christopher Pike" required>
+			              <label for="outgoing_cc" class="formbold-form-label">Outgoing Commander*:</label>
+				    </div>`;
+				}
+				htmlToInsert += `</div>`
+        break;
+
+      case 'assumption_of_command':
+        htmlToInsert = `
+
+          <div class="formbold-input-flex">
+            <div>
+	      			<input type="text" id="inbound_cc" name="inbound_cc" class="formbold-form-input" placeholder="Captain James T. Kirk" required>
+              <label for="inbound_cc" class="formbold-form-label">Inbound Commander*:</label>
+            </div>
+          </div>
+        `;
+        break;
+
+      case 'promotion_ceremony_individual':
+        htmlToInsert = `
+	  			<div class="formbold-input-flex">
+            <div>
+              <input type="text" id="promotee_name" name="promotee_name" class="formbold-form-input" placeholder="Major Peter Parker" required>
+              <label for="promotee_name" class="formbold-form-label">Promotee's Name & Rank*:</label>
+            </div>
+            <div>
+              <input type="text" id="new_rank" name="new_rank" class="formbold-form-input" placeholder="Lieutenant Colonel" required>
+              <label for="new_rank" class="formbold-form-label">New Rank*:</label>
+            </div>
+          </div>
+        `;
+        break;
+
+      case 'retirement_ceremony':
+        htmlToInsert = `
+	  			<div class="formbold-input-flex">
+            <div>
+              <input type="text" id="retiree_name" name="retiree_name" class="formbold-form-input" placeholder="CMSgt Ashley Williams" required>
+              <label for="retiree_name" class="formbold-form-label">Retiree's Name*:</label>
+            </div>
+            <div>
+              <input type="date" id="retirement_date" name="retirement_date" class="formbold-form-input" placeholder="" required>
+              <label for="retirement_date" class="formbold-form-label">Retirement Date*:</label>
+            </div>
+          </div>
+        `;
+        break;
+      
+      case 'promotion_ceremony_group':
+        htmlToInsert = `
+	  			<div>
+		    		<label for="group_promotees_names" class="formbold-form-label" required>Promotees Names*:</label>
+	          <textarea id="group_promotees_names" name="group_promotees_names" class="formbold-textarea" placeholder="LCDR Jane Shepard promoting to CDR" rows="10" cols="110"></textarea>
+	        </div>
+	        <div>
+		    		<label for="invite_columns_group_promotion" class="formbold-form-label" required>Number of Columns in Invite*:</label>
+	          <select name="invite_columns_group_promotion" id="invite_columns_group_promotion" required>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+	        </div>
+        `;
+        break;
+
+      case 'commissioning_ceremony':
+        htmlToInsert = `
+				  <div>
+				    <label for="commissioning_ceremony_names" class="formbold-form-label">Commissioning Names*:</label>
+            <textarea id="commissioning_ceremony_names" name="commissioning_ceremony_names" class="formbold-textarea" placeholder="Cadet Alex Ryder..." rows="10" cols="110" required></textarea>
+          </div>
+          <div>
+		    		<label for="invite_columns_commissioning" class="formbold-form-label" required>Number of Columns in Invite*:</label>
+	          <select name="invite_columns_commissioning" id="invite_columns_commissioning" required>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+	        </div>
+        `;
+        break;
+
+      case 'graduation':
+        htmlToInsert = `
+				  <div class="formbold-input-flex">
+				    <div>
+				    	<input type="text" id="class_number" name="class_number" class="formbold-form-input" placeholder="IQT 27-01" required>
+							<label for="class_number" class="formbold-form-label">Class Number*:</label>
+            </div>
+	  			</div>
+
+				  <div>
+				    <label for="graduation_names" class="formbold-form-label">Graduation Names*:</label>
+			      <textarea id="graduation_names" name="graduation_names" class="formbold-textarea" placeholder="A1C Kelsey Grammer..." rows="10" cols="110" required></textarea>
+          </div>
+
+          <div>
+		    		<label for="invite_columns_graduation" class="formbold-form-label" required>Number of Columns in Invite*:</label>
+	          <select name="invite_columns_graduation" id="invite_columns_graduation" required>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+	        </div>
+        `;
+        break;
+      
+      case 'generic_no_food':
+      case 'generic_food':
+				/*htmlToInsert = `
+				  <div>
+				    <label for="event_info" class="formbold-form-label">Event Information*:</label>
+            <textarea id="event_info" name="event_info" class="formbold-textarea" placeholder="Type info here..." rows="10" cols="110" required></textarea>
+          </div>`;*/
+
+				if( eventType == 'generic_food') {
+				  htmlToInsert += `
+				    <br>
+            <div>
+	      			<label for="food_options" class="formbold-form-label">Food Options*:</label>
+              <textarea id="food_options" name="food_options" class="formbold-textarea" placeholder="Chicken and rice - $5..." rows="3" cols="110" required></textarea>
+          	</div>`;
+				}
+				break;
+
+      /*case 'awards_ceremony':
+				htmlToInsert = `
+				  <div>
+				    <label for="nominee_names" class="formbold-form-label">Nominee Names:</label>
+            <textarea id="nominee_names" name="nominee_names" class="formbold-textarea" placeholder="SGT Ace Levy..." rows="10" cols="110" required></textarea>
+          </div>`;
+        break; */
+	
+      // Add more cases here for other event types as needed
+      // case 'promotion_ceremony_group':
+      //   htmlToInsert = `... your HTML for group promotion ...`;
+      //   break;
+
+      default:
+        // No additional fields needed for other types
+        break;
+    }
+
+    // Insert the generated HTML into the container
+    if (htmlToInsert) {
+      conditionalContainer.innerHTML = htmlToInsert;
+    }
+  }
+
+  // Optional: Trigger the function on page load to set the initial state
+  // based on the default selected event type.
+  updateConditionalFields(eventTypeSelect.value);
+
+  /* -- END: Dynamic Fields Listeners - Event Type-specific Fields -- */
+
+  /*--- Add the footer ---*/
+  createFooter('footer', 'github_logo.png');
+
+  /* -- START: SessionStorage - Submission to Relevant Template -- */
+
+  // Grab the form element
+  const form = document.getElementById('invite_form');
+
+  form.addEventListener('submit', async function(event) {
+
+	const eventTypeSelect = document.getElementById('event_type');
+	// 1. Prevent the default HTTP POST request
+	event.preventDefault(); 
+
+	// 2. Extract all data from the form (including dynamically created fields)
+	// FormData automatically grabs any input with a 'name' attribute
+	const formData = new FormData(this);
+	const dataObject = Object.fromEntries(formData.entries());
+
+		// 3. Handle the file upload
+		const imageFile = image_input.files[0];
+		if (imageFile) {
+			// Convert the image file to a Base64 Data URL and add it to our data object
+	  	try {
+	     			dataObject.unit_logo_src = await fileToDataUrl(imageFile);
+	  	} 
+			// Optionally handle the error, e.g., show a message to the user
+	  	catch (error) {
+	    		console.error("Error converting file to Data URL:", error);
+	  	}
+		}
+
+  	// 4. Serialize to JSON and save to the browser's session memory
+  	sessionStorage.setItem('eventPayload', JSON.stringify(dataObject));
+
+	  // 5. Get the correct template and open it in a new tab
+		const eventType = eventTypeSelect.value;
+	  const template_href = `./templates/${eventType}_template.html`
+		window.open(template_href, '_blank')
+  });
+  
+  /**
+   * Clears the conditional container and adds new fields based on the selected event type.
+   * @param {string} eventType - The value of the selected option (e.g., 'change_of_command').
+   */
+  function getHREF(eventType) {
+    // Use a switch statement to determine which fields to create
+    if(eventType != ""){
+			return "./templates/" + eventType + '_template.html';
+    }
+    else { 
+      return "./templates/change_of_command_template.html"
+    }
+
+  };
+
+  /**
+   * Reads a file and converts it into a Base64 Data URL.
+   * This function returns a Promise that resolves with the Data URL string.
+   * @param {File} file The file selected by the user.
+   * @returns {Promise<string>}
+   */
+  function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result); // Resolve the promise with the result
+          reader.onerror = reject; // Reject the promise if an error occurs
+          reader.readAsDataURL(file); // Start reading the file
+      });
+  }
+
+/**
+ * Converts a JavaScript Date object to a 'YYYY-MM-DD' string.
+ * @param {Date} date The date object to format.
+ * @returns {string} The formatted date string.
+ */
+function formatDateForInput(date) {
+    if (!date || !(date instanceof Date)) return "";
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+}
+
+/**
+ * Convert Excel serial date to JavaScript Date
+ * @param {number} serial - Excel date serial number
+ * @returns {Date} JavaScript Date object
+ */
+function excelSerialToJSDate(serial) {
+    if (typeof serial !== 'number' || isNaN(serial)) {
+        throw new Error("Invalid Excel serial date: must be a number.");
+    }
+
+    // Excel incorrectly treats 1900 as a leap year, so adjust for that
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30)); // Dec 30, 1899
+    const jsDate = new Date(excelEpoch.getTime() + serial * 86400000);
+
+    return jsDate;
+}
+
+/**
+ * Convert Excel serial date to formatted string
+ * @param {number} serial - Excel date serial number
+ * @param {string} locale - Optional locale (default: 'en-US')
+ * @param {object} options - Intl.DateTimeFormat options
+ * @returns {string} Formatted date string
+ */
+function excelDateToString(serial, locale = 'en-US') {
+    const date = excelSerialToJSDate(serial);
+    return date.toLocaleDateString(locale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+}
+
+const colorMap = {
+  // TIOH Colors. Source: https://usafpatches.com/reference/palettes/#color
+  "Black" : "#000000",              
+  "Smoke" : "#53575A",		    
+  "Silver Gray": "#8A8D8F",       
+  "White" : "#FFFFFF",              
+  "Air Force Yellow": "#F1C400",   
+  "Yellow" : "#FFBF3C",
+  "Golden Orange" : "#FF9E18",
+  "Orange" : "#FF4D00",
+  "Marine Corps Scarlet" : "#EA0029",
+  "Scarlet" : "#C10230",
+  "Crimson" : "#A50050",
+  "Brick Red" : "#8A2432",
+  "Garnet" : "#6F263D",
+  "Maroon" : "#572A31",
+  "Purple" : "#60269E",
+  "Brittany Blue" : "#A2C5D3",
+  "Bluebird" : "#7BADD3",
+  "Oriental Blue" : "#0071CE",
+  "Light Blue": "#5B7F95",
+  "Ultramarine Blue": "#001689",
+  "Cobalt Blue" : "#00205C",
+  "Flag Blue" : "#011E41",
+  "Old Glory Blue" : "#002169",
+  "Grotto Blue" : "#00C1D4",
+  "Teal Blue" : "#003E52",
+  "Mosstone" : "#7A9A01",
+  "Emerald" : "#61A60E",
+  "Irish Green" : "#00833E",
+  "Green" : "#1A5632",
+  "Spruce Green" : "#004C45",
+  "Bottle Green" : "#095540",
+  "Army Green" : "#294634",
+  "Olive Drab": "#6B5A24", 
+  "Natural" : "#CCC4A7",
+  "Khaki" : "#B2A77E",
+  "Buff" : "#BC955C",
+  "Bronze" : "#B2A77E",
+  "Gold Brown" : "#8B6F4B",
+  "Spice Brown" : "#BB6125",
+  "Brown" : "#75391C",
+  "Bagby Green" : "#A19200"
+  };
+
+  document.getElementById('excel-upload').addEventListener('change', handleExcelUpload);
+
+  /**
+   * Handles the upload of an Excel file
+   * This function transforms the excel data into JSON format
+   * @param {data} 
+   * @returns {none}
+   */
+	function handleExcelUpload(event) {
+	  const file = event.target.files[0];
+	  if (!file) return;
+
+	  const reader = new FileReader();
+	  
+	  // Read file as binary string
+	  reader.readAsArrayBuffer(file);
+	  
+	  reader.onload = function(e) {
+	    const data = new Uint8Array(e.target.result);
+	    const workbook = XLSX.read(data, { type: 'array' });
+	    
+	    // Grab the first sheet
+	    const firstSheetName = workbook.SheetNames[0];
+	    const worksheet = workbook.Sheets[firstSheetName];
+	    
+	    // Convert sheet rows to an array of objects
+	    // header: 1 returns a raw 2D array; default converts headers to object keys
+	    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+	    
+	    processImportedData(jsonData);
+	  };
+	} 
+
+	/**
+   * Reads data from an excel spreadsheet and adjusts
+   * This function returns a Promise that resolves with the Data URL string.
+   * @param {data} 
+   * @returns {none}
+   */
+	function processImportedData(data) {
+	  if (!data || data.length === 0) {
+	    console.error("No data found in the Excel file.");
+	    return;
+	  }
+
+	  // 1. Get the first row of data from the Excel sheet.
+	  const rowData = data[0];
+	  console.log('Imported Row Data:', rowData);
+
+	  // 2. Define the mapping from Excel Header Name -> HTML Input ID
+	  //    This must exactly match your spreadsheet's column titles.
+	  const fieldMapping = {
+		  "Event_Name": "event_name",
+		  "Event_Unit": "unit",
+		  "Event_Date": "event_date",
+		  "RSVP_Date": "rsvp_date",
+		  "Start_Hours": "event_hours",
+		  "Start_Minutes": "event_minutes",
+		  "Event_Location": "location",
+		  "Event_City": "city",
+		  "Event_State": "state",
+		  "Font_Size": "font_size",
+		  "Font_Type": "font_type",
+		  "Border_Font_Color" : "border_color",
+		  "Button_Color" : "button_color",
+		  "Military_Attire": "military_dress_code",
+		  "Civilian_Attire": "civilian_dress_code",
+		  "Event_POC_1_Name": "poc_name_1",
+		  "Event_POC_1_Email": "poc_email_1",
+		  "Event_POC_1_Phone": "poc_phone_1",
+		  "Event_POC_2_Name": "poc_name_2",
+		  "Event_POC_2_Email": "poc_email_2",
+		  "Event_POC_2_Phone": "poc_phone_2",
+		  "Presiding_Official": "presiding_official",
+		  "Presiding_Official_Unit": "presiding_official_unit",
+		  "Presiding_Official_Title": "presiding_official_title",
+		  "Additional_Information": "additional_information",
+		  "Event_Type": "event_type",
+		  "RSVP_Link": "rsvp_link"
+	  };
+
+	  // 3. Iterate over the mapping and populate the form.
+	  for (const excelHeader in fieldMapping) {
+	    const inputId = fieldMapping[excelHeader];
+	    let value = rowData[excelHeader];
+
+	    // Check if the key exists and has a value in the spreadsheet
+	    if (value !== undefined && value !== null) {
+	      const inputElement = document.getElementById(inputId);
+	      if (inputElement) {
+		    if (inputId === 'border_color' || inputId === 'button_color') {
+                	// For colors, look up the name and set the hex code
+                	const colorName = String(value);
+                	if (colorMap[colorName]) {
+                    		inputElement.value = colorMap[colorName];
+                	} 
+                	else {
+                    		console.warn(`Color name "${value}" not found. Using default.`);
+                	}
+			}  
+		  // Handle Special Dropdown
+		  else if (inputId === 'event_type') {
+			if (value === 'Other Event (no food)' || value === 'Other Event (no food)') {
+				if (value === 'Other Event (no food)') {
+					inputElement.value = 'generic_no_food';
+				}
+				else {
+					inputElement.value = 'generic_food';
+				}
+			}
+			else {
+                		// For Event Type, convert the display text (e.g., "Change of Command")
+                		// into the option value (e.g., "change_of_command").
+                		const formattedValue = String(value).toLowerCase().replace(/ /g, '_').replace(/[()]/g, '');
+                		inputElement.value = formattedValue;
+                		// Manually trigger the 'change' event so dynamic fields appear
+                		inputElement.dispatchEvent(new Event('change', { bubbles: true }));
+			}
+
+            	}
+
+		else if (inputId === 'font_type') {
+			let caseValue = "Arial, sans-serif";
+                	switch (value) {
+				case 'Helvetica':
+					caseValue = "'Helvetica Neue', Helvetica, Arial, sans-serif";
+				case 'Lucida Sans': 
+					caseValue = "'Lucida Sans', sans-serif";
+				case 'Segoe UI':
+					caseValue = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+				case 'Trebuchet MS':
+					caseValue = "Trebuchet MS, sans-serif";
+				case 'Verdana':
+					caseValue = "Verdana, sans-serif";
+				case 'Georgia':
+					caseValue = "Georgia, serif";
+				case 'Palatino':
+					caseValue = "'Palatino Linotype', Palatino, serif";
+				case 'Times New Roman':
+					caseValue = "'Times New Roman', Times, serif";
+				case 'Courier New':
+					caseValue = "'Courier New', Courier, monospace";
+				case 'Lucida Console':
+					caseValue = "'Lucida Console', Monaco, monospace";
+				case 'Comic Sans MS':
+					caseValue = "'Comic Sans MS', cursive";
+			}
+			inputElement.value = caseValue;
+        }
+		else {
+			// If this is a date field, format the Date object into a string
+            		if (inputId === "event_date" || inputId === "rsvp_date") {
+				if (inputElement.type === 'text') {
+                    			inputElement.type = 'date';
+                		}
+				let dateInt = parseInt(value, 10);
+                		jsDate = excelSerialToJSDate(dateInt);
+				value = formatDateForInput(jsDate);
+            		} 
+	        	inputElement.value = value;
+		}
+
+	        // CRITICAL: Manually trigger the 'change' event for the Event Type dropdown
+            // so your dynamic fields will appear correctly.
+            if (inputId === 'event_type') {
+                inputElement.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+	      } else {
+	      	console.warn(`Could not find form element with ID: ${inputId}`);
+	      }
+	    }
+	  }
+
+	  alert("Form data imported successfully!");
+	}
+ 
+</script>
