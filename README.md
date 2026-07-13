@@ -14,7 +14,7 @@ Provide a standalone HTML and JavaScript solution to replace the, now depreciate
 5. If you made a mistake when creating an invite (after hitting submit), exit out of the new tab and make the correction.
 
 ## Recommendations for Collecting RSVPs
-1. Non-Paying Events: For users with Microsoft 365 access (such as DOD365 and equivalent users), I recommend using Microsoft Forms for collecting RSVPs. A 3-minute tutorial on how to do this is here: https://www.youtube.com/watch?v=65Oz1CfOQso 
+1. Free Events: For users with Microsoft 365 access (such as DOD365 and equivalent users), I recommend using Microsoft Forms for collecting RSVPs. A 3-minute tutorial on how to do this is here: https://www.youtube.com/watch?v=65Oz1CfOQso 
 2. Paid Events: For paid events, please reach out to your local Protocol or equivalent office for guidance. Plenty of sites exist, such as EventBrite and Zeffy, based on your organization's needs.
 
 ## Author/Contributors
