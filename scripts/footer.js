@@ -15,14 +15,14 @@
  * or output file
  * @param {string} footerID - the id of the location to create the footer.
  */
-function createFooter(footerContainerId) {
+function createFooter(footerContainerId, imgSrc='../github_logo.png') {
 	const footerContainer = document.getElementById(footerContainerId);
 
 	footerContainer.innerHTML = '';
 
 	htmlToInsert = `
 	<div align="center">
-		<a href="https://github.com/why-github" target="_blank" title="Visit Github"><img src="../github_logo.png" alt="Visit the Github Home Page" width="100"></a>
+		<a href="https://github.com/why-github" target="_blank" title="Visit Github"><img src=${imgSrc} alt="Visit the Github Home Page" width="100"></a>
 	</div>
   	<p style="margin: 10px 0px 0px 0px"><font style="font-weight: bold;">ALL Support is handled through <font style="color:red; text-decoration: underline;">GitHub only</font> at: 
 	<a href="https://github.com/gmjohnson17/">https://github.com/gmjohnson17/</a></font></p>
@@ -30,8 +30,8 @@ function createFooter(footerContainerId) {
   	<p style="margin: 0px 0px 10px 0px">Graham Johnson</p>
 	<p style="font-weight: bold; margin: 10px 0px 0px 0px">Contributors</p>
   	<p style="margin: 0px 0px 10px 0px">Graham Johnson</p>
-	<p style="margin: 10px 0px 0px 0px"><font style="font-weight: bold;">Version:</font> 1.0</p>
-	<p style="margin: 0px 0px 10px 0px"><font style="font-weight: bold;">Version Date:</font> 10 July 2026</p>
+	<p style="margin: 10px 0px 0px 0px"><font style="font-weight: bold;">Version:</font> 1.1</p>
+	<p style="margin: 0px 0px 10px 0px"><font style="font-weight: bold;">Version Date:</font> 13 July 2026</p>
 	<p style="text-align: center; margin: 10px 0px; font-weight: bold;">This form is not intended for commercial use or personal gain.</p>
 	<p style="margin: 10px 0px 10px 0px"><font style="font-weight: bold;">Social Media: </font>
 	<a href="https://github.com/gmjohnson17/" target="_blank">GitHub</a> | 
