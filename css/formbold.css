@@ -80,7 +80,7 @@
 .formbold-form-label {
     color: #07074D;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 24px;
     display: block;
     margin-bottom: 18px;
@@ -89,7 +89,7 @@
 .formbold-form-label-hidden {
     color: #07074D;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 24px;
     display: block;
     margin-bottom: 18px;
@@ -165,4 +165,20 @@
      margin-top: 15px;
      max-width: 500px;
      display: none; /* Hidden until an image is uploaded */
+}
+
+/* WCAG 2.2 Additional Features for AA */
+
+/* Focus indicator that meets 2.4.11 specifications */
+*:focus-visible {
+    outline: 3px solid #00308F !important; /* High-contrast TIOH Air Force Blue */
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.9); /* White boundary spacer */
+}
+
+
+.formbold-btn, .action-btn {
+    min-height: 44px; /* Well above the 24px limit for exceptional UX */
+    min-width: 44px;
+    padding: 12px 24px;
 }

@@ -1,6 +1,18 @@
-/* Sources: https://einvitations.afit.edu/generator/index.cfm
-   
-Note: AFIT E-Invite defunct as of August 2025 */
+/*
+ * Name: Electronic Invite CSS
+ * Author: Graham Johnson
+ * Date: 21 Jul 26
+ *
+ */
+
+/* Purpose: Provides CSS for electronic invitations. 
+ *
+ * Sources: 
+ * - https://einvitations.afit.edu/generator/index.cfm
+ * - Gemini Flash 3.5  
+ *
+ * Note: AFIT E-Invite defunct as of August 2025 
+ */
 
 .body {
 	margin: 15px 0 0 0 !important;
@@ -16,9 +28,12 @@ Note: AFIT E-Invite defunct as of August 2025 */
 	height: 500px;
 	min-height: 500px;
 	border:10px solid #002596;	  
-	# background:url(https://media.defense.gov/2017/Jun/09/2001760349/-1/-1/0/170609-F-XX123-048.PNG) no-repeat;
-	background-size:100%;
-	position: relative;
+	/*background: url(https://upload.wikimedia.org/wikipedia/commons/6/67/1st_Marine_Amphibious_Corp.jpg); */
+  background-size:50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  background-blend-mode: lighten;
 }
 
 .paper {
@@ -40,6 +55,7 @@ Note: AFIT E-Invite defunct as of August 2025 */
 	height: auto !important;
 	height: 300px;
 	min-height: 300px;
+
 }
 
 .center {
@@ -98,117 +114,109 @@ table.rsvptable {
 }
 
 .split_left {
-        float: left;
-        clear: left;
-        width: 50%;
-        height: auto !important;
-        /*background:red;*/
-        height: 75px;
-        min-height: 75px;
+  float: left;
+  clear: left;
+  width: 50%;
+  height: auto !important;
+  height: 75px;
+  min-height: 75px;
 	text-align: left;
-        color: #002596;
-        font-size: 18pt;
-       /*font-weight: bold; */
-        font-family: Arial;
+  color: #002596;
+  font-size: 18pt;
+  font-family: Arial;
 }
 		
- .split_right {
-                        float: right;
-                        clear: right;
-                        width: 370px;
-                        height: auto !important;
-                        /*background:brown;*/
-                        height: 75px;
-                        min-height: 75px;
-                        text-align: left;
-                        color: #002596;
-                        font-size: 18pt;
-                        
-                        /*font-weight: bold; */
-                        font-family: Arial;
+.split_right {
+  float: right;
+  clear: right;
+  width: 370px;
+  height: auto !important;
+  height: 75px;
+  min-height: 75px;
+  text-align: left;
+  color: #002596;
+  font-size: 18pt;            
+  font-family: Arial;
 }
 
 .split_right_box {
-                        text-align: left;
-                        width: 90%;
-                        background:;
-                        float: right;
-                        clear: left;
-                        height: 75px;
-                        min-height: 75px;
+  text-align: left;
+  width: 90%;
+  float: right;
+  clear: left;
+  height: 75px;
+  min-height: 75px;
 }
                 
 .split_right_box {
-                        text-align: left;
-                        /*background:yellow;*/
-                        float: right;
+  text-align: left;
+  float: right;
 }
                 
 .rline {
-                        width: 720px;
-                        margin: 10px 0 0 0;
-                        height: auto !important;
-                        height: 50px;
-                        min-height: 50px;
-                        color: #002596;
-                        font-size: 18pt;
-                        font-weight: bold;
-                        font-family:Arial;
+  width: 720px;
+  margin: 10px 0 0 0;
+  height: auto !important;
+  height: 50px;
+  min-height: 50px;
+  color: #002596;
+  font-size: 18pt;
+  font-weight: bold;
+  font-family:Arial;
 }
                 
 .buttonline {
-                        width: 720px;
-                        margin: 10px 0 0 0;
-                        height: auto !important;
-                        height: 35px;
-                        min-height: 35px;
-                        text-align: center;
+  width: 720px;
+  margin: 10px 0 0 0;
+  height: auto !important;
+  height: 35px;
+  min-height: 35px;
+  text-align: center;
 }
                 
 .docline {
-                        width: 720px;
-                        margin: 10px 0 10px 0;
-                        height: auto !important;
-                        /*background:aqua;*/
-                        height: 50px;
-                        min-height: 50px;
+  width: 720px;
+  margin: 10px 0 10px 0;
+  height: auto !important;
+  /*background:aqua;*/
+  height: 50px;
+  min-height: 50px;
 }
                 
 .bottomspacer {
-                        width: 720px;
-                        height: 30px;
+  width: 720px;
+  height: 30px;
 }
                 
 .buttontext{
-                        font-family:verdana;
-                        font-size:11pt;
+  font-family:verdana;
+  font-size:11pt;
 }
 
 .exampleborderradius {
-                        width:auto;
-                        display:table;
-                        
-                        background-color: #002596;
-                        text-align: center;
-                        border-radius: 25px;
-                        -moz-border-radius: 25px;
-                        height:35px;
-                        font-family:verdana;
-                        font-size:11pt;
-                        font-weight:bold;
-                        color:white;
+  width:auto;
+  display:table;
+  background-color: #002596;
+  text-align: center;
+  border-radius: 25px;
+  -moz-border-radius: 25px;
+  height:35px;
+  font-family:verdana;
+  font-size:11pt;
+  font-weight:bold;
+  color:white;
 }
                 
 .exampleborderradius:hover{
-                        background:gray;
+  background:gray;
 }
                 
 .rsvpbuttonpad{
-                        padding:8px 20px 8px 20px;
+  padding:8px 20px 8px 20px;
 }
                 
 .rsvpbuttonlink{
-                        text-decoration:none;
+  text-decoration:none;
 }
 
 
@@ -245,6 +253,14 @@ table.rsvptable {
     margin: 0;
     width: 100%;
     height: auto;
+
+    /*
+     * Scale the element down to fit the print width.
+     * 100vw in print mode refers to the width of the printable area.
+     * The 750px base width is divided into the 100vw to get the scale factor.
+     */
+    /*transform: scale(calc(100vw / 750px));
+    transform-origin: top left; *//* Scale from the top-left corner */
   }
 
   /* 
@@ -254,3 +270,20 @@ table.rsvptable {
     content: "" !important;
   }
 }
+
+/* --- Page Layout for Printing --- */
+
+@page {
+  size: 8.5in 11in; /* US Letter size */
+  margin: 0.5in;     /* A standard half-inch margin */
+}
+
+/* WCAG 2.2 Additional Features for AA */
+
+/* Focus indicator that meets 2.4.11 specifications */
+*:focus-visible {
+    outline: 3px solid #00308F !important; /* High-contrast TIOH Air Force Blue */
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.9); /* White boundary spacer */
+}
+
